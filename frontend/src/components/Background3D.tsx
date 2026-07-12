@@ -16,31 +16,30 @@ export default function Background3D() {
     };
     setCanvasSize();
 
-    const characters = '01';
-    const fontSize = 20;
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ';
+    const fontSize = 16;
     let columns = Math.floor(canvas.width / fontSize);
     let drops: number[] = Array(columns).fill(0).map(() => Math.random() * -100);
 
     const draw = () => {
       // Fading background to create trails
-      ctx.fillStyle = 'rgba(3, 7, 18, 0.1)'; // Matches #030712 slate-950/slate-900
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.1)'; 
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      ctx.font = `500 ${fontSize}px "JetBrains Mono", monospace`;
+      ctx.font = `500 ${fontSize}px monospace`;
 
       for (let i = 0; i < drops.length; i++) {
         const text = characters.charAt(Math.floor(Math.random() * characters.length));
         
-        // Make the "head" of the drop white, and the rest the "pro" cyan brand color
         const isHead = Math.random() < 0.05;
         if (isHead) {
           ctx.fillStyle = '#FFFFFF';
           ctx.shadowBlur = 10;
           ctx.shadowColor = '#FFFFFF';
         } else {
-          ctx.fillStyle = '#06B6D4'; // Brand secondary color
+          ctx.fillStyle = '#0F0'; // Matrix green
           ctx.shadowBlur = 5;
-          ctx.shadowColor = '#06B6D4';
+          ctx.shadowColor = '#0F0';
         }
 
         ctx.fillText(text, i * fontSize, drops[i] * fontSize);
@@ -85,12 +84,12 @@ export default function Background3D() {
   }, []);
 
   return (
-    <div className="fixed inset-0 -z-10 bg-[#030712] overflow-hidden">
+    <div className="fixed inset-0 -z-10 bg-black overflow-hidden">
       <canvas 
         ref={canvasRef} 
-        className="absolute inset-0 w-full h-full opacity-30" 
+        className="absolute inset-0 w-full h-full opacity-80" 
       />
-      <div className="absolute inset-0 bg-linear-to-b from-transparent via-[#030712]/50 to-[#030712]" />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/50 to-black" />
     </div>
   );
 }
